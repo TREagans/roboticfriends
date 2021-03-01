@@ -14,11 +14,16 @@ class App extends Component {
 	};
 
 	// runs when app loads
-	componentDidMount() {
+	async componentDidMount() {
+
 		// making API call to JSON placeholder (users)
-		fetch('https://jsonplaceholder.typicode.com/users')
-			.then(response => response.json())
-			.then(users => this.setState({ robots: users }));
+		const response = await fetch('https://jsonplaceholder.typicode.com/users');
+
+		// must also await JSON conversion
+		const users = await response.json();
+
+		// setting the state
+		this.setState({ robots: users});
 	}
 
 	// defining search change function
@@ -37,7 +42,7 @@ class App extends Component {
 
 		// if load time takes long, display loading
 		return !robots.length ? (
-			<h1>Loading . . .</h1>
+			<h1 className='tc'>Loading . . .</h1>
 		) : (
 			<div className='tc'>
 				<h1 className='f1'>Robotic Friends</h1>
